@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+wwwroot/lib/
+node_modules/

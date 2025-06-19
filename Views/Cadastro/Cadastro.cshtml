@@ -1,0 +1,28 @@
+﻿@{
+	ViewData["Title"] = "Cadastro";
+}
+
+<h2>Cadastro</h2>
+
+<form asp-action="Cadastro" method="post">
+    <div class="mb-3 col-6">
+        <label for="idnome" class="form-label col-6">Nome</label>
+        <input type="text" name=dsNome class="form-control" id="idnome" required>
+    </div>
+    <div class="mb-3 col-6">
+        <label for="idtelefone" class="form-label">Telefone</label>
+        <input type="text" name=nrTelefone class="form-control" id="idtelefone" required>
+    </div>
+    <div class="mb-3 col-6">
+        <label for="idplaca" class="form-label">Placa</label>
+        <input type="text" name=dsPlaca class="form-control" id="idplaca" required>
+    </div>
+    <div class="mb-3 col-6">
+        <label for="idmodelo" class="form-label">Modelo</label>
+        <input type="text" name=dsModelo class="form-control" id="idmodelo" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <a asp-controller="Cliente" asp-action="ListarCliente" class="btn btn-primary">Listar Clientes</a>
+    
+</form>

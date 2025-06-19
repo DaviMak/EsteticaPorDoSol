@@ -1,0 +1,32 @@
+﻿@model EsteticaPorDoSol.Models.Cliente
+
+<h2>Editar Cliente</h2>
+
+@if (ViewBag.Mensagem != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Mensagem
+    </div>
+}
+
+<form asp-action="EditarCliente" method="post">
+    <input type="hidden" asp-for="idCliente" />
+
+    <div class="mb-3">
+        <label>Nome:</label>
+        <input type="text" asp-for="dsNome" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Telefone:</label>
+        <input type="text" asp-for="nrTelefone" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Placa:</label>
+        <input type="text" asp-for="dsPlaca" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Modelo do Carro:</label>
+        <input type="text" asp-for="dsModelo" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+</form>
