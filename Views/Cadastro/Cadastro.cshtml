@@ -21,8 +21,14 @@
         <label for="idmodelo" class="form-label">Modelo</label>
         <input type="text" name=dsModelo class="form-control" id="idmodelo" required>
     </div>
+    <div class="mb-3 col-6">
+        <label for="idcor" class="form-label">Cor</label>
+        <input type="text" name=dsCor class="form-control" id="idcor" required>
+    </div>
     
     <button type="submit" class="btn btn-primary">Cadastrar</button>
     <a asp-controller="Cliente" asp-action="ListarCliente" class="btn btn-primary">Listar Clientes</a>
+
+    <a asp-controller="Servico" asp-action="ListarServico" class="btn btn-primary">Listar Servico</a>
     
 </form>

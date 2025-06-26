@@ -1,6 +1,32 @@
-﻿namespace EsteticaPorDoSol.Views.Servico
-{
-    public class ListarServico
-    {
-    }
+﻿@{
+    ViewData["Title"] = "Servico";
 }
+
+@model List<EsteticaPorDoSol.Models.Servico>
+
+<h2>Lista de Servicos</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Servico</th>
+        <th>Descricao</th>
+        <th>Valor</th>
+        <th>Acoes</th>
+    </tr>
+    @foreach (var Servico in Model)
+    {
+        <tr>
+            <td>@Servico.idServico</td>
+            <td>@Servico.dsNomeServico</td>
+            <td>@Servico.dsDescricaoServico</td>
+            <td>@Servico.vlServico</td>
+
+            <td>
+                <a asp-controller="Servico" asp-action="EditarServico" asp-route-id="@Servico.idServico" class="btn btn-warning">Editar</a>
+                <a asp-controller="Servico" asp-action="ExcluirServico" asp-route-id="@Servico.idServico" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+    }
+</table>
+<a asp-controller="Servico" asp-action="CadastrarServico" class="btn btn-primary">Adicionar Servico</a>

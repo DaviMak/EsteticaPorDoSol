@@ -6,7 +6,8 @@ namespace EsteticaPorDoSol.Models
     {
         [Key]
         public int idServico { get; set; }
-        public required string dsServico { get; set; }
+        public required string dsNomeServico { get; set; }
         public required string dsDescricaoServico { get; set; }
+        public string? vlServico { get; set; }
     }
 }

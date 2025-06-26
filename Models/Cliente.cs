@@ -10,5 +10,6 @@ namespace EsteticaPorDoSol.Models
         public required string nrTelefone { get; set; }
         public required string dsPlaca { get; set; }
         public required string dsModelo { get; set; }
+        public required string dsCor { get; set; }
     }
 }

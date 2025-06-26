@@ -1,6 +1,26 @@
-﻿namespace EsteticaPorDoSol.Views.Servico
-{
-    public class CadastrarServico
-    {
-    }
+﻿@model List<EsteticaPorDoSol.Models.Servico>
+@{
+    ViewData["Title"] = "Servico";
 }
+
+<h2>Cadastro de Servicos</h2>
+
+<form asp-action="CadastrarServico" method="post">
+    <div class="mb-3 col-6">
+        <label for="idServico" class="form-label col-6">Servico</label>
+        <input type="text" name=dsNomeServico class="form-control" id="idServico" required>
+    </div>
+    <div class="mb-3 col-6">
+        <label for="idDescricaoServico" class="form-label">Descricao</label>
+        <input type="text" name=dsDescricaoServico class="form-control" id="idDescricaoServico" required>
+    </div>
+    <div class="mb-3 col-6">
+        <label for="idValor" class="form-label">Valor</label>
+        <input type="text" name=vlServico class="form-control" id="idValor" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+    
+
+</form>

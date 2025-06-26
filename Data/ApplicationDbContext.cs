@@ -9,9 +9,6 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    // Defina seus DbSets aqui, por exemplo:
-    // public DbSet<Produto> Produtos { get; set; }
-
     public DbSet<Cliente> tbClientes { get; set; }
     public DbSet<Servico> tbServicos { get; set; }
     public DbSet<Atendimento> tbAtendimentos { get; set; }
