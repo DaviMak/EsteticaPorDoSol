@@ -52,14 +52,29 @@ namespace EsteticaPorDoSol.Controllers
             {
                 _context.tbClientes.Update(cliente);
                 _context.SaveChanges();
-                ViewBag.Mensagem = "Cliente atualizado com sucesso!";
+                TempData["Mensagem"] = "Cliente atualizado com sucesso!";
                 return RedirectToAction("ListarCliente");
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = $"Erro ao atualizar cliente: {ex.Message}";
+                TempData["Mensagem"] = $"Erro ao atualizar cliente: {ex.Message}";
                 return View(cliente);
             }
         }
+        [HttpPost]
+        public IActionResult CadastrarCliente(Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.tbClientes.Add(cliente);
+                _context.SaveChanges();
+                TempData["Mensagem"] = "Cliente cadastrado com sucesso!";
+                
+                return RedirectToAction("ListarCliente");
+            }
+            TempData["Mensagem"] = "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";
+            return View("CadastrarCliente", cliente);
+        }
+
     }
 }

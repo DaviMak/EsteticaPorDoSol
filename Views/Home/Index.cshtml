@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Estética Pôr do Sol";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="mb-4">Bem-vindo à Estética Pôr do Sol</h1>
+
+    <div class="d-grid gap-3 col-6 mx-auto">
+        <a asp-controller="Cliente" asp-action="Cadastro" class="btn btn-primary btn-lg">Cadastrar Cliente</a>
+        <a asp-controller="Cliente" asp-action="ListarCliente" class="btn btn-secondary btn-lg">Listar Clientes</a>
+        <a asp-controller="Carro" asp-action="ListarCarro" class="btn btn-secondary btn-lg">Listar Carros</a>
+        <a asp-controller="Servico" asp-action="ListarServico" class="btn btn-secondary btn-lg">Listar Serviços</a>
+    </div>
+</div>

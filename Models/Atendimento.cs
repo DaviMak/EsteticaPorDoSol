@@ -7,11 +7,11 @@ namespace EsteticaPorDoSol.Models
     {
         [Key]
         public int idAtendimento { get; set; }
-        [Required]
+        //[Required]
         public int idCliente { get; set; }
         public required DateTime dtDataHoraAtendimento { get; set; }
-        [ForeignKey("idCliente")]
+        //[ForeignKey("idCliente")]
         public Cliente Cliente { get; set; } = null!;
-        public List<AtendimentoServico> AtendimentoServicos { get; set; } = null!;
+        public List<AtendimentoServico> AtendimentoServicos { get; set; } = new();
     }
 }

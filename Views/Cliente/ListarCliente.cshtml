@@ -13,9 +13,7 @@
         <th>ID</th>
         <th>Nome</th>
         <th>Telefone</th>
-        <th>Placa</th>
-        <th>Modelo</th>
-        <th>Cor</th>
+
         <th>Acoes</th>
     </tr>
     @foreach (var cliente in Model)
@@ -24,9 +22,7 @@
             <td>@cliente.idCliente</td>
             <td>@cliente.dsNome</td>
             <td>@cliente.nrTelefone</td>
-            <td>@cliente.dsPlaca</td>
-            <td>@cliente.dsModelo</td>
-            <td>@cliente.dsCor</td>
+
             <td>
                 <a asp-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.idCliente" class="btn btn-warning">Editar</a>
 				<a asp-controller="Cliente" asp-action="Excluir" asp-route-id="@cliente.idCliente" class="btn btn-danger">Excluir</a>

@@ -29,18 +29,18 @@ namespace EsteticaPorDoSol.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Cadastro(Cliente cliente)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.tbClientes.Add(cliente);
-                _context.SaveChanges();
-                ViewBag.Mensagem = "Cliente cadastrado com sucesso!";
-                return RedirectToAction("Cadastro");
-            }
-            ViewBag.Mensagem = "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";
-            return View(cliente);
-        }
+        //[HttpPost]
+        //public IActionResult Cadastro(Cliente cliente)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.tbClientes.Add(cliente);
+        //        _context.SaveChanges();
+        //        ViewBag.Mensagem = "Cliente cadastrado com sucesso!";
+        //        return RedirectToAction("Cadastro");
+        //    }
+        //    ViewBag.Mensagem = "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";
+        //    return View(cliente);
+        //}
     }
 }

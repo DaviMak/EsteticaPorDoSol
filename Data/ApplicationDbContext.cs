@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Cliente> tbClientes { get; set; }
+    public DbSet<Carro> tbCarros { get; set; }
     public DbSet<Servico> tbServicos { get; set; }
     public DbSet<Atendimento> tbAtendimentos { get; set; }
     public DbSet<AtendimentoServico> tbAtendimentoServicos { get; set; }

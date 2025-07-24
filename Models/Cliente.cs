@@ -8,8 +8,6 @@ namespace EsteticaPorDoSol.Models
         public int idCliente { get; set; }
         public required string dsNome { get; set; }
         public required string nrTelefone { get; set; }
-        public required string dsPlaca { get; set; }
-        public required string dsModelo { get; set; }
-        public required string dsCor { get; set; }
+        public List<Carro> Carros { get; set; } = new();
     }
 }
