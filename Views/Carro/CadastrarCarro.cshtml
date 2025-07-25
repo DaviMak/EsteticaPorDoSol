@@ -1,6 +1,43 @@
-﻿namespace EsteticaPorDoSol.Views.Carro
-{
-    public class CadastrarCarro
-    {
-    }
+﻿@model EsteticaPorDoSol.Models.Carro
+
+@{
+    ViewData["Title"] = "Cadastrar Carro";
 }
+
+<h2>Cadastrar Carro</h2>
+
+<form asp-action="CadastrarCarro" method="post">
+    <div class="mb-3">
+        <label for="idplaca" class="form-label">Placa</label>
+        <input asp-for="dsPlaca" class="form-control" id="idplaca" />
+        <span asp-validation-for="dsPlaca" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="idmodelo" class="form-label">Modelo</label>
+        <input asp-for="dsModelo" class="form-control" id="idmodelo" />
+        <span asp-validation-for="dsModelo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="idcor" class="form-label">Cor</label>
+        <input asp-for="dsCor" class="form-control" id="idcor" />
+        <span asp-validation-for="dsCor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="cliente" class="form-label">Cliente</label>
+        <select asp-for="idCliente" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Clientes, "idCliente", "dsNome"))">
+            <option value="">Selecione um cliente</option>
+        </select>
+        <span asp-validation-for="idCliente" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <a asp-action="ListarCarro" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@

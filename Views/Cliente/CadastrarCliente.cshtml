@@ -1,6 +1,24 @@
-﻿namespace EsteticaPorDoSol.Views.Cliente
-{
-    public class CadastrarCliente
-    {
-    }
+﻿@model EsteticaPorDoSol.Models.Cliente
+
+@{
+    ViewData["Title"] = "Cadastro de Clientes";
 }
+
+<h2>Cadastro de Carro</h2>
+
+<form asp-action="CadastrarCliente" method="post">
+
+
+    <div class="mb-3 col-6">
+        <label asp-for="dsNome" class="form-label">Nome</label>
+        <input asp-for="dsNome" class="form-control" required />
+    </div>
+
+    <div class="mb-3 col-6">
+        <label asp-for="nrTelefone" class="form-label">Telefone</label>
+        <input asp-for="nrTelefone" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Cadastrar Cliente</button>
+    <a asp-controller="Cliente" asp-action="ListarCliente" class="btn btn-secondary">Voltar</a>
+</form>

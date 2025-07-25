@@ -1,6 +1,32 @@
-﻿namespace EsteticaPorDoSol.Views.Carro
-{
-    public class ListarCarro
-    {
-    }
+﻿@model List<EsteticaPorDoSol.Models.Carro>
+@{
+    ViewData["Title"] = "Lista de Carros";
 }
+
+
+<h2>Lista de Carros</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Placa</th>
+        <th>Modelo</th>
+        <th>Cor</th>
+        <th>Dono(a)</th>
+    </tr>
+    @foreach (var Carro in Model)
+    {
+        <tr>
+            <td>@Carro.idCarro</td>
+            <td>@Carro.dsPlaca</td>
+            <td>@Carro.dsModelo</td>
+            <td>@Carro.dsCor</td>
+            <td>@Carro.idCliente</td>
+
+            <td>
+                <a asp-controller="Carro" asp-action="Editar" asp-route-id="@Carro.idCarro" class="btn btn-warning">Editar</a>
+                <a asp-controller="Carro" asp-action="Excluir" asp-route-id="@Carro.idCarro" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+    }
+</table>

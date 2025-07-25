@@ -76,5 +76,12 @@ namespace EsteticaPorDoSol.Controllers
             return View("CadastrarCliente", cliente);
         }
 
+        [HttpGet]
+        public IActionResult CadastrarCliente()
+        {
+            ViewBag.Clientes = _context.tbClientes.ToList();
+            return View("CadastrarCliente");
+        }
+
     }
 }

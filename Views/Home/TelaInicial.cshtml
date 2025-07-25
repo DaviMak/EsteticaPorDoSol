@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- Topo -->
+<div style="display:flex; align-items:center; justify-content:space-between; padding: 10px;">
+    <button class="btn btn-light" onclick="abrirMenu()">☰</button>
+    <img src="/img/logo.png" alt="PDSLogo" style="height:50px;">
+    <form method="get" asp-controller="Atendimento" asp-action="BuscarPorPlaca" class="d-flex">
+        <input type="text" name="placa" placeholder="Buscar por placa" class="form-control" />
+        <button type="submit" class="btn btn-secondary">🔍</button>
+    </form>
+</div>
+
+<!-- Botões principais -->
+<div class="text-center mt-4">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            @* <a asp-action="CadastrarAtendimento" class="btn btn-success w-100">⬅️ Entrada</a> *@
+            <a asp-controller="Carro" asp-action="Cadastrar" class="btn btn-success w-100">Entrada</a>
+        </div>
+        <div class="col-4">
+            <a asp-action="Saida" class="btn btn-danger w-100">Saída ➡️</a>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-primary btn-lg rounded-circle" style="width: 70px; height: 70px;">+</a>
+    </div>
+</div>

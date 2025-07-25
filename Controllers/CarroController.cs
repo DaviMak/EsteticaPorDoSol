@@ -71,6 +71,7 @@ namespace EsteticaPorDoSol.Controllers
         [HttpPost]
         public IActionResult CadastrarCarro(Carro carro)
         {
+            //carro.Cliente = _context.tbClientes.Find(carro.idCliente);
             if (ModelState.IsValid)
             {
                 _context.tbCarros.Add(carro);
@@ -79,6 +80,7 @@ namespace EsteticaPorDoSol.Controllers
                 return RedirectToAction("ListarCarro");
             }
             TempData["Mensagem"] = "Erro ao cadastrar Veiculo. Verifique os dados e tente novamente.";
+            ViewBag.Clientes = _context.tbClientes.ToList();
 
             return View("CadastrarCarro", carro);
         }

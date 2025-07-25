@@ -14,5 +14,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Servico> tbServicos { get; set; }
     public DbSet<Atendimento> tbAtendimentos { get; set; }
     public DbSet<AtendimentoServico> tbAtendimentoServicos { get; set; }
-
 }
+

@@ -7,15 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Carro\CadastrarCarro.cshtml" />
     <Content Remove="Views\Carro\EditarCarro.cshtml" />
-    <Content Remove="Views\Carro\ListarCarro.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Views\Carro\CadastrarCarro.cshtml" />
     <Compile Include="Views\Carro\EditarCarro.cshtml" />
-    <Compile Include="Views\Carro\ListarCarro.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

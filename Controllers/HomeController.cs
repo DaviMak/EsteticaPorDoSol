@@ -8,5 +8,9 @@ namespace EsteticaPorDoSol.Controllers
         {
             return View();
         }
+        public IActionResult TelaInicial()
+        {
+            return View();
+        }
     }
 }
