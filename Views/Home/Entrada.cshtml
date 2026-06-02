@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Entrada";
+}
+
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Registrar Entrada</h2>
+
+    <div class="d-grid gap-3 col-8 col-md-4 mx-auto">
+        <a asp-controller="Cliente" asp-action="CadastrarCliente" class="btn btn-success btn-lg">
+            🆕 Cliente Novo
+        </a>
+        <a asp-controller="Atendimento" asp-action="BuscarVeiculo" class="btn btn-primary btn-lg">
+            🔍 Cliente Já Existente
+        </a>
+        <a asp-controller="Home" asp-action="TelaInicial" class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+</div>

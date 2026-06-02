@@ -1,0 +1,37 @@
+﻿@model EsteticaPorDoSol.Models.Veiculo
+@{
+    ViewData["Title"] = "Editar Veículo";
+}
+
+<h2>Editar Veículo</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-info">@TempData["Mensagem"]</div>
+}
+
+<form asp-action="EditarVeiculo" method="post">
+    <input type="hidden" asp-for="idVeiculo" />
+
+    <div class="mb-3">
+        <label class="form-label">Placa</label>
+        <input asp-for="dsPlaca" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Modelo</label>
+        <input asp-for="dsModelo" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cor</label>
+        <input asp-for="dsCor" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cliente</label>
+        <select asp-for="idCliente" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Clientes, "idCliente", "dsNome"))">
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    <a asp-action="ListarVeiculo" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -8,6 +8,6 @@ namespace EsteticaPorDoSol.Models
         public int idServico { get; set; }
         public required string dsNomeServico { get; set; }
         public required string dsDescricaoServico { get; set; }
-        public string? vlServico { get; set; }
+        public decimal vlServico { get; set; }
     }
 }

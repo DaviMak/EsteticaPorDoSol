@@ -12,5 +12,9 @@ namespace EsteticaPorDoSol.Controllers
         {
             return View();
         }
+        public IActionResult Entrada()
+        {
+            return View();
+        }
     }
 }

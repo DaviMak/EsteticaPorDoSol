@@ -1,12 +1,12 @@
-﻿@model EsteticaPorDoSol.Models.Carro
+﻿@model EsteticaPorDoSol.Models.Veiculo
 
 @{
-    ViewData["Title"] = "Cadastrar Carro";
+    ViewData["Title"] = "Cadastrar Veículo";
 }
 
-<h2>Cadastrar Carro</h2>
+<h2>Cadastrar Veículo</h2>
 
-<form asp-action="CadastrarCarro" method="post">
+<form asp-action="CadastrarVeiculo" method="post">
     <div class="mb-3">
         <label for="idplaca" class="form-label">Placa</label>
         <input asp-for="dsPlaca" class="form-control" id="idplaca" />
@@ -35,7 +35,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Cadastrar</button>
-    <a asp-action="ListarCarro" class="btn btn-secondary">Cancelar</a>
+    <a asp-action="ListarVeiculo" class="btn btn-secondary">Cancelar</a>
 </form>
 
 @* @section Scripts {

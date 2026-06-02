@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EsteticaPorDoSol.Models
 {
-    public class Carro
+    public class Veiculo
     {
         [Key]
-        public int idCarro { get; set; }
+        public int idVeiculo { get; set; }
         public required string dsPlaca { get; set; }
         public required string dsModelo { get; set; }
         public required string dsCor { get; set; }

@@ -1,0 +1,37 @@
+﻿@model List<EsteticaPorDoSol.Models.Veiculo>
+@{
+    ViewData["Title"] = "Lista de Veículos";
+}
+
+<h2>Lista de Veículos</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-info">@TempData["Mensagem"]</div>
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Placa</th>
+        <th>Modelo</th>
+        <th>Cor</th>
+        <th>Dono(a)</th>
+        <th>Ações</th>
+    </tr>
+    @foreach (var veiculo in Model)
+    {
+        <tr>
+            <td>@veiculo.dsPlaca</td>
+            <td>@veiculo.dsModelo</td>
+            <td>@veiculo.dsCor</td>
+            <td>@(veiculo.Cliente?.dsNome ?? "Não informado")</td>
+            <td>
+                <a asp-controller="Veiculo" asp-action="Editar" asp-route-id="@veiculo.idVeiculo" class="btn btn-warning btn-sm">Editar</a>
+                <a asp-controller="Veiculo" asp-action="Excluir" asp-route-id="@veiculo.idVeiculo" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Veiculo" asp-action="CadastrarVeiculo" class="btn btn-primary">Adicionar Veículo</a>
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>
