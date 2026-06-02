@@ -1,0 +1,102 @@
+@model List<EsteticaPorDoSol.Models.Atendimento>
+@{
+    ViewData["Title"] = "Histórico por Placa";
+    var veiculo = ViewBag.Veiculo as EsteticaPorDoSol.Models.Veiculo;
+}
+@{
+    var placas = ViewBag.Placas as List<string>;
+}
+
+<h2>Histórico por Placa</h2>
+
+<form asp-action="BuscarPorPlaca" method="get">
+    <div class="mb-3 d-flex gap-2">
+        <input type="text" name="placa" id="inputPlaca" class="form-control" placeholder="Ex: ABC1234" />
+        <ul id="sugestoes" class="list-group mt-1" style="display:none; position:absolute; z-index:999;"></ul>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+</form>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-warning">@TempData["Mensagem"]</div>
+}
+
+@if (veiculo != null)
+{
+    <p><strong>Veículo:</strong> @veiculo.dsModelo — @veiculo.dsPlaca — @veiculo.dsCor</p>
+    <p><strong>Dono(a):</strong> @veiculo.Cliente?.dsNome — @veiculo.Cliente?.nrTelefone</p>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>Data Entrada</th>
+                <th>Data Saída</th>
+                <th>Serviços</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+            @foreach (var atendimento in Model)
+            {
+                <tr>
+                    <td>@atendimento.dtDataHoraAtendimento.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@(atendimento.dtDataHoraSaida?.ToString("dd/MM/yyyy HH:mm") ?? "—")</td>
+                    <td>
+                        @foreach (var s in atendimento.AtendimentoServicos)
+                        {
+                            <span>@s.Servico?.dsNomeServico</span><br />
+                        }
+                    </td>
+                    <td>R$ @atendimento.vlTotal.ToString("F2")</td>
+                    <td>
+                        <span class="badge @(atendimento.dsStatus == "Aberto" ? "bg-success" : "bg-danger")">
+                            @atendimento.dsStatus
+                        </span>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>Nenhum atendimento encontrado para este veículo.</p>
+    }
+}
+
+<a asp-controller="Home" asp-action="TelaInicial" class="btn btn-secondary">Voltar</a>
+
+<script>
+    const placas = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(placas ?? new List<string>()));
+
+    document.getElementById('inputPlaca').addEventListener('input', function () {
+        const val = this.value.toUpperCase();
+        const lista = document.getElementById('sugestoes');
+        lista.innerHTML = '';
+
+        if (val.length === 0) {
+            lista.style.display = 'none';
+            return;
+        }
+
+        const filtradas = placas.filter(p => p.toUpperCase().includes(val));
+        if (filtradas.length === 0) {
+            lista.style.display = 'none';
+            return;
+        }
+
+        filtradas.forEach(p => {
+            const item = document.createElement('li');
+            item.className = 'list-group-item list-group-item-action';
+            item.textContent = p;
+            item.style.cursor = 'pointer';
+            item.onclick = () => {
+                document.getElementById('inputPlaca').value = p;
+                lista.style.display = 'none';
+            };
+            lista.appendChild(item);
+        });
+
+        lista.style.display = 'block';
+    });
+</script>

@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Buscar Veículo";
+}
+
+@{
+    var placas = ViewBag.Placas as List<string>;
+}
+
+<h2>Buscar Veículo pela Placa</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-warning">@TempData["Mensagem"]</div>
+}
+
+<form asp-action="BuscarVeiculo" method="post">
+    <div class="mb-3">
+        <label class="form-label">Placa</label>
+        <input type="text" name="placa" id="inputPlaca" class="form-control" 
+               placeholder="Ex: ABC1234" required autocomplete="off" />
+        <ul id="sugestoes" class="list-group mt-1" style="display:none; position:absolute; z-index:999;"></ul>
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    <a asp-controller="Home" asp-action="Entrada" class="btn btn-secondary">Voltar</a>
+</form>
+
+<script>
+    const placas = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(placas ?? new List<string>()));
+
+    document.getElementById('inputPlaca').addEventListener('input', function () {
+        const val = this.value.toUpperCase();
+        const lista = document.getElementById('sugestoes');
+        lista.innerHTML = '';
+
+        if (val.length === 0) {
+            lista.style.display = 'none';
+            return;
+        }
+
+        const filtradas = placas.filter(p => p.toUpperCase().includes(val));
+        if (filtradas.length === 0) {
+            lista.style.display = 'none';
+            return;
+        }
+
+        filtradas.forEach(p => {
+            const item = document.createElement('li');
+            item.className = 'list-group-item list-group-item-action';
+            item.textContent = p;
+            item.style.cursor = 'pointer';
+            item.onclick = () => {
+                document.getElementById('inputPlaca').value = p;
+                lista.style.display = 'none';
+            };
+            lista.appendChild(item);
+        });
+
+        lista.style.display = 'block';
+    });
+</script>

@@ -1,0 +1,54 @@
+@model List<EsteticaPorDoSol.Models.Atendimento>
+@{
+    ViewData["Title"] = "Saída";
+}
+
+<h2>Atendimentos em Aberto</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensagem"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>Nenhum atendimento em aberto no momento.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Placa</th>
+            <th>Serviços</th>
+            <th>Total</th>
+            <th>Entrada</th>
+            <th>Ação</th>
+        </tr>
+        @foreach (var atendimento in Model)
+        {
+            <tr>
+                <td>@atendimento.Cliente?.dsNome</td>
+                <td>@atendimento.Veiculo?.dsModelo</td>
+                <td>@atendimento.Veiculo?.dsPlaca</td>
+                <td>
+                    @foreach (var s in atendimento.AtendimentoServicos)
+                    {
+                        <span>@s.Servico?.dsNomeServico</span><br />
+                    }
+                </td>
+                <td>R$ @atendimento.vlTotal.ToString("F2")</td>
+                <td>@atendimento.dtDataHoraAtendimento.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <form asp-action="FinalizarAtendimento" method="post">
+                        <input type="hidden" name="idAtendimento" value="@atendimento.idAtendimento" />
+                        <button type="submit" class="btn btn-danger btn-sm">Finalizar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a asp-controller="Home" asp-action="TelaInicial" class="btn btn-secondary">Voltar</a>
