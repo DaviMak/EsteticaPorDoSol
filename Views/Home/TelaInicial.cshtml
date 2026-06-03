@@ -5,7 +5,7 @@
 <!-- Topo -->
 <div style="display:flex; align-items:center; justify-content:space-between; padding: 10px;">
     <button class="btn btn-light">☰</button>
-    <img src="/img/logo.png" alt="PDSLogo" style="height:50px;">
+    <img src="/img/logo.png" alt="PDSLogo" style="height:50px;" onclick="window.location.href='/Home/Index'" />
     <form method="get" asp-controller="Atendimento" asp-action="BuscarPorPlaca" class="d-flex gap-1">
         <input type="text" name="placa" placeholder="Buscar por placa" class="form-control" />
         <button type="submit" class="btn btn-secondary">🔍</button>
