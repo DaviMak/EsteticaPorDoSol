@@ -70,7 +70,7 @@ namespace EsteticaPorDoSol.Controllers
                 _context.SaveChanges();
                 TempData["Mensagem"] = "Cliente cadastrado com sucesso!";
                 
-                return RedirectToAction("ListarCliente");
+                return RedirectToAction("CadastrarVeiculo", "Veiculo", new { idCliente = cliente.idCliente });
             }
             TempData["Mensagem"] = "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";
             return View("CadastrarCliente", cliente);

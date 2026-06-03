@@ -1,24 +1,22 @@
 @{
     ViewData["Title"] = "Buscar Veículo";
-}
-
-@{
     var placas = ViewBag.Placas as List<string>;
+    var nomes = ViewBag.Nomes as List<string>;
 }
-
-<h2>Buscar Veículo pela Placa</h2>
 
 @if (TempData["Mensagem"] != null)
 {
     <div class="alert alert-warning">@TempData["Mensagem"]</div>
 }
 
-<form asp-action="BuscarVeiculo" method="post">
+<h2>Buscar Veículo</h2>
+
+<form asp-action="BuscarVeiculo" method="post" id="formBuscar">
     <div class="mb-3">
-        <label class="form-label">Placa</label>
-        <input type="text" name="placa" id="inputPlaca" class="form-control" 
-               placeholder="Ex: ABC1234" required autocomplete="off" />
-        <ul id="sugestoes" class="list-group mt-1" style="display:none; position:absolute; z-index:999;"></ul>
+        <label class="form-label">Placa ou Nome do Cliente</label>
+        <input type="text" name="busca" id="inputBusca" class="form-control"
+               placeholder="Ex: ABC1234 ou João" required autocomplete="off" />
+        <ul id="sugestoes" class="list-group mt-1" style="display:none; position:absolute; z-index:999; width:300px;"></ul>
     </div>
     <button type="submit" class="btn btn-primary">Buscar</button>
     <a asp-controller="Home" asp-action="Entrada" class="btn btn-secondary">Voltar</a>
@@ -26,22 +24,18 @@
 
 <script>
     const placas = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(placas ?? new List<string>()));
+    const nomes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(nomes ?? new List<string>()));
+    const sugestoes = [...placas, ...nomes];
 
-    document.getElementById('inputPlaca').addEventListener('input', function () {
+    document.getElementById('inputBusca').addEventListener('input', function () {
         const val = this.value.toUpperCase();
         const lista = document.getElementById('sugestoes');
         lista.innerHTML = '';
 
-        if (val.length === 0) {
-            lista.style.display = 'none';
-            return;
-        }
+        if (val.length === 0) { lista.style.display = 'none'; return; }
 
-        const filtradas = placas.filter(p => p.toUpperCase().includes(val));
-        if (filtradas.length === 0) {
-            lista.style.display = 'none';
-            return;
-        }
+        const filtradas = sugestoes.filter(p => p.toUpperCase().includes(val));
+        if (filtradas.length === 0) { lista.style.display = 'none'; return; }
 
         filtradas.forEach(p => {
             const item = document.createElement('li');
@@ -49,12 +43,20 @@
             item.textContent = p;
             item.style.cursor = 'pointer';
             item.onclick = () => {
-                document.getElementById('inputPlaca').value = p;
+                document.getElementById('inputBusca').value = p;
                 lista.style.display = 'none';
+                document.getElementById('formBuscar').submit(); 
             };
             lista.appendChild(item);
         });
 
         lista.style.display = 'block';
+    });
+
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('#inputBusca') && !e.target.closest('#sugestoes')) {
+            document.getElementById('sugestoes').style.display = 'none';
+        }
     });
 </script>

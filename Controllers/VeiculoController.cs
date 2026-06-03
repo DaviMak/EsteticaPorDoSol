@@ -49,25 +49,37 @@ namespace EsteticaPorDoSol.Controllers
                 return View("EditarVeiculo", veiculo);
         }
         [HttpPost]
+        [HttpPost]
         public IActionResult EditarVeiculo(Veiculo veiculo)
         {
-            try
+            if (ModelState.IsValid)
             {
+                if (veiculo.dsPlaca != null)
+                {
+                    veiculo.dsPlaca = veiculo.dsPlaca.Trim().ToUpper();
+
+                    if (_context.tbVeiculos.Any(v => v.dsPlaca == veiculo.dsPlaca && v.idVeiculo != veiculo.idVeiculo))
+                    {
+                        ViewBag.Mensagem = "Placa já cadastrada.";
+                        ViewBag.Clientes = _context.tbClientes.ToList();
+                        return View("EditarVeiculo", veiculo);
+                    }
+                }
+
                 _context.tbVeiculos.Update(veiculo);
                 _context.SaveChanges();
-                ViewBag.Mensagem = "Veículo atualizado com sucesso!";
+                TempData["Mensagem"] = "Veículo atualizado com sucesso!";
                 return RedirectToAction("ListarVeiculo");
             }
-            catch (Exception ex)
-            {
-                ViewBag.Mensagem = $"Erro ao atualizar veículo: {ex.Message}";
-                return View("EditarVeiculo", veiculo);
-            }
+
+            ViewBag.Clientes = _context.tbClientes.ToList();
+            return View("EditarVeiculo", veiculo);
         }
         [HttpGet]
-        public IActionResult CadastrarVeiculo()
+        public IActionResult CadastrarVeiculo(int? idCliente)
         {
             ViewBag.Clientes = _context.tbClientes.ToList();
+            ViewBag.IdClienteSelecionado = idCliente;
             return View("CadastrarVeiculo");
         }
 
@@ -77,6 +89,16 @@ namespace EsteticaPorDoSol.Controllers
             //veiculo.Cliente = _context.tbClientes.Find(veiculo.idCliente);
             if (ModelState.IsValid)
             {
+                if(veiculo.dsPlaca != null)
+                {
+                    veiculo.dsPlaca = veiculo.dsPlaca.Trim().ToUpper();
+                    if (_context.tbVeiculos.Any(v => v.dsPlaca == veiculo.dsPlaca))
+                    {
+                        ViewBag.Mensagem = "Placa já cadastrada.";
+                        ViewBag.Clientes = _context.tbClientes.ToList();
+                        return View("CadastrarVeiculo", veiculo);
+                    }
+                }
                 _context.tbVeiculos.Add(veiculo);
                 _context.SaveChanges();
                 ViewBag.Mensagem = "Veículo cadastrado com sucesso!";

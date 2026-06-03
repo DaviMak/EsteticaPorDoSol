@@ -9,8 +9,13 @@
 <form asp-action="CadastrarVeiculo" method="post">
     <div class="mb-3">
         <label for="idplaca" class="form-label">Placa</label>
-        <input asp-for="dsPlaca" class="form-control" id="idplaca" />
-        <span asp-validation-for="dsPlaca" class="text-danger"></span>
+        <input asp-for="dsPlaca" class="form-control @(ViewBag.Mensagem != null ? "is-invalid" : "")" id="idplaca" />
+        @if (ViewBag.Mensagem != null)
+        {
+            <div class="invalid-feedback">
+                @ViewBag.Mensagem
+            </div>
+        }
     </div>
 
     <div class="mb-3">
@@ -28,7 +33,7 @@
     <div class="mb-3">
         <label for="cliente" class="form-label">Cliente</label>
         <select asp-for="idCliente" class="form-control"
-                asp-items="@(new SelectList(ViewBag.Clientes, "idCliente", "dsNome"))">
+                asp-items="@(new SelectList(ViewBag.Clientes, "idCliente", "dsNome", ViewBag.idClienteSelecionado))">
             <option value="">Selecione um cliente</option>
         </select>
         <span asp-validation-for="idCliente" class="text-danger"></span>

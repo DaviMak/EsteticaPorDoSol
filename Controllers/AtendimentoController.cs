@@ -22,15 +22,17 @@ namespace EsteticaPorDoSol.Controllers
         }
 
         [HttpPost]
-        public IActionResult BuscarVeiculo(string placa)
+        public IActionResult BuscarVeiculo(string busca)
         {
             var veiculo = _context.tbVeiculos
                 .Include(v => v.Cliente)
-                .FirstOrDefault(v => v.dsPlaca.ToUpper() == placa.ToUpper());
+                .FirstOrDefault(v =>
+                    v.dsPlaca.ToUpper() == busca.ToUpper() ||
+                    v.Cliente.dsNome.ToUpper().Contains(busca.ToUpper()));
 
             if (veiculo == null)
             {
-                TempData["Mensagem"] = "Veículo não encontrado. Cadastre o cliente e o veículo primeiro.";
+                TempData["Mensagem"] = "Veículo não encontrado.";
                 return RedirectToAction("Entrada", "Home");
             }
 
@@ -140,17 +142,20 @@ namespace EsteticaPorDoSol.Controllers
         public IActionResult BuscarPorPlaca(string placa)
         {
             ViewBag.Placas = _context.tbVeiculos.Select(v => v.dsPlaca).ToList();
+            ViewBag.Nomes = _context.tbClientes.Select(c => c.dsNome).ToList();
 
             if (string.IsNullOrEmpty(placa))
                 return View(null);
 
             var veiculo = _context.tbVeiculos
                 .Include(v => v.Cliente)
-                .FirstOrDefault(v => v.dsPlaca.ToUpper() == placa.ToUpper());
+                .FirstOrDefault(v =>
+                    v.dsPlaca.ToUpper() == placa.ToUpper() ||
+                    v.Cliente.dsNome.ToUpper().Contains(placa.ToUpper()));
 
             if (veiculo == null)
             {
-                TempData["Mensagem"] = "Veículo não encontrado.";
+                TempData["Erro"] = "Veículo não encontrado.";
                 return View(null);
             }
 
@@ -163,6 +168,20 @@ namespace EsteticaPorDoSol.Controllers
 
             ViewBag.Veiculo = veiculo;
             return View(historico);
+        }
+
+        [HttpGet]
+        public IActionResult Historico()
+        {
+            var atendimentos = _context.tbAtendimentos
+                .Include(a => a.Veiculo)
+                .Include(a => a.Cliente)
+                .Include(a => a.AtendimentoServicos)
+                    .ThenInclude(s => s.Servico)
+                .OrderByDescending(a => a.dtDataHoraAtendimento)
+                .ToList();
+
+            return View(atendimentos);
         }
     }
 }
