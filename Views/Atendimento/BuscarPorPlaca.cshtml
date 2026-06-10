@@ -1,12 +1,11 @@
-@model List<EsteticaPorDoSol.Models.Atendimento>
+@model List<EsteticaPorDoSol.Models.Veiculo>
 @{
     ViewData["Title"] = "Histórico";
-    var veiculo = ViewBag.Veiculo as EsteticaPorDoSol.Models.Veiculo;
     var placas = ViewBag.Placas as List<string>;
     var nomes = ViewBag.Nomes as List<string>;
 }
 
-<h2>Histórico por Placa ou Cliente</h2>
+<h2>Histórico</h2>
 
 <form asp-action="BuscarPorPlaca" method="get" id="formHistorico">
     <div class="mb-3">
@@ -23,47 +22,51 @@
     <div class="alert alert-warning mt-2">@TempData["Erro"]</div>
 }
 
-@if (veiculo != null)
+@if (Model != null && Model.Any())
 {
-    <div class="mt-3">
-        <p><strong>Veículo:</strong> @veiculo.dsModelo — @veiculo.dsPlaca — @veiculo.dsCor</p>
-        <p><strong>Dono(a):</strong> @veiculo.Cliente?.dsNome — @veiculo.Cliente?.nrTelefone</p>
-    </div>
+    foreach (var veiculo in Model)
+    {
+        <div class="mt-4">
+            <h5>@veiculo.dsModelo — @veiculo.dsPlaca — @veiculo.dsCor</h5>
+            <p><strong>Dono(a):</strong> @veiculo.Cliente?.dsNome — @veiculo.Cliente?.nrTelefone</p>
 
-    @if (Model != null && Model.Any())
-    {
-        <table class="table table-bordered mt-2">
-            <tr>
-                <th>Data Entrada</th>
-                <th>Data Saída</th>
-                <th>Serviços</th>
-                <th>Total</th>
-                <th>Status</th>
-            </tr>
-            @foreach (var atendimento in Model)
+            @if (veiculo.Atendimentos != null && veiculo.Atendimentos.Any())
             {
-                <tr>
-                    <td>@atendimento.dtDataHoraAtendimento.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@(atendimento.dtDataHoraSaida?.ToString("dd/MM/yyyy HH:mm") ?? "—")</td>
-                    <td>
-                        @foreach (var s in atendimento.AtendimentoServicos)
-                        {
-                            <span>@s.Servico?.dsNomeServico — R$ @s.vlServicoNoMomento.ToString("F2")</span><br />
-                        }
-                    </td>
-                    <td>R$ @atendimento.vlTotal.ToString("F2")</td>
-                    <td>
-                        <span class="badge @(atendimento.dsStatus == "Aberto" ? "bg-success" : "bg-danger")">
-                            @atendimento.dsStatus
-                        </span>
-                    </td>
-                </tr>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Data Entrada</th>
+                        <th>Data Saída</th>
+                        <th>Serviços</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                    @foreach (var atendimento in veiculo.Atendimentos.OrderByDescending(a => a.dtDataHoraAtendimento))
+                    {
+                        <tr>
+                            <td>@atendimento.dtDataHoraAtendimento.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@(atendimento.dtDataHoraSaida?.ToString("dd/MM/yyyy HH:mm") ?? "—")</td>
+                            <td>
+                                @foreach (var s in atendimento.AtendimentoServicos)
+                                {
+                                    <span>@s.Servico?.dsNomeServico — R$ @s.vlServicoNoMomento.ToString("F2")</span><br />
+                                }
+                            </td>
+                            <td>R$ @atendimento.vlTotal.ToString("F2")</td>
+                            <td>
+                                <span class="badge @(atendimento.dsStatus == "Aberto" ? "bg-success" : "bg-danger")">
+                                    @atendimento.dsStatus
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </table>
             }
-        </table>
-    }
-    else
-    {
-        <p>Nenhum atendimento encontrado para este veículo.</p>
+            else
+            {
+                <p class="text-muted">Nenhum atendimento registrado para este veículo.</p>
+            }
+        </div>
+        <hr />
     }
 }
 
@@ -90,7 +93,7 @@
             item.onclick = () => {
                 document.getElementById('inputPlaca').value = p;
                 lista.style.display = 'none';
-                document.getElementById('formHistorico').submit(); // pesquisa ao selecionar
+                document.getElementById('formHistorico').submit();
             };
             lista.appendChild(item);
         });

@@ -4,6 +4,7 @@
 }
 
 <h2>Histórico Geral</h2>
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary fixed-top">Voltar</a>
 
 @if (!Model.Any())
 {
@@ -45,4 +46,3 @@ else
     </table>
 }
 
-<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar</a>

@@ -17,6 +17,7 @@ namespace EsteticaPorDoSol.Controllers
         {
             var listaVeiculos = _context.tbVeiculos
                 .Include(v => v.Cliente)
+                .OrderByDescending(v => v.idVeiculo)
                 .ToList();
             return View(listaVeiculos);
         }
@@ -102,7 +103,7 @@ namespace EsteticaPorDoSol.Controllers
                 _context.tbVeiculos.Add(veiculo);
                 _context.SaveChanges();
                 ViewBag.Mensagem = "Veículo cadastrado com sucesso!";
-                return RedirectToAction("ListarVeiculo");
+                return RedirectToAction("Novoatendimento", "Atendimento", new { idVeiculo = veiculo.idVeiculo });
             }
             TempData["Mensagem"] = "Erro ao cadastrar Veículo. Verifique os dados e tente novamente.";
             ViewBag.Clientes = _context.tbClientes.ToList();

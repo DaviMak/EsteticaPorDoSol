@@ -19,5 +19,7 @@ namespace EsteticaPorDoSol.Models
         public int idCliente { get; set; }
         
         public Cliente ?Cliente { get; set; }
+
+        public List<Atendimento> Atendimentos { get; set; } = new();
     }
 }

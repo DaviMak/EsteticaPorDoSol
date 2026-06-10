@@ -1,5 +1,6 @@
 ﻿using EsteticaPorDoSol.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EsteticaPorDoSol.Controllers
 {
@@ -20,19 +21,25 @@ namespace EsteticaPorDoSol.Controllers
 
         public IActionResult Excluir(int id)
         {
-            var cliente = _context.tbClientes.Find(id);
-            if (cliente != null)
+            var cliente = _context.tbClientes
+                .Include(c => c.Veiculos)
+                .FirstOrDefault(c => c.idCliente == id);
+            if (cliente == null)
             {
+                TempData["Mensagem"] = "Cliente não encontrado.";
+                return RedirectToAction("ListarCliente");
+            }
+            if (cliente.Veiculos.Any())
+            {
+                TempData["Mensagem"] = "Não é possível excluir o cliente, pois ele possui veículos cadastrados.";
+                return RedirectToAction("ListarCliente");
+            }
                 _context.tbClientes.Remove(cliente);
                 _context.SaveChanges();
-                ViewBag.Mensagem = "Cliente excluído com sucesso!";
-            }
-            else
-            {
-                ViewBag.Mensagem = "Cliente não encontrado.";
-            }
-            return RedirectToAction("ListarCliente");
+                TempData["Sucesso"] = "Cliente excluído com sucesso!";
+                return RedirectToAction("ListarCliente");
         }
+        
 
         public IActionResult Editar(int id)
         { 

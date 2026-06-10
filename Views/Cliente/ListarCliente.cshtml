@@ -1,10 +1,19 @@
 ﻿
-
 @{
     ViewData["Title"] = "Cliente";
 }
 
 @model List<EsteticaPorDoSol.Models.Cliente>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-warning">@TempData["Mensagem"]</div>
+}
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["Sucesso"]</div>
+}
+
 
 <h2>Lista de Clientes</h2>
 
@@ -25,7 +34,8 @@
 
             <td>
                 <a asp-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.idCliente" class="btn btn-warning">Editar</a>
-				<a asp-controller="Cliente" asp-action="Excluir" asp-route-id="@cliente.idCliente" class="btn btn-danger">Excluir</a>
+				<a asp-controller="Cliente" asp-action="Excluir" asp-route-id="@cliente.idCliente" class="btn btn-danger"
+                onclick="return confirm('Tem certeza que deseja excluir esse cliente?')">Excluir</a>
             </td>
         </tr>
     }
