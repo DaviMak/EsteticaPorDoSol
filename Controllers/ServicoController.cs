@@ -55,6 +55,7 @@ namespace EsteticaPorDoSol.Controllers
         {
             try
             {
+                servico.vlServico = Math.Round(servico.vlServico, 2);
                 _context.tbServicos.Update(servico);
                 _context.SaveChanges();
                 ViewBag.Mensagem = "Servico atualizado com sucesso!";
@@ -71,6 +72,7 @@ namespace EsteticaPorDoSol.Controllers
         {
             if (ModelState.IsValid)
             {
+                servico.vlServico = Math.Round(servico.vlServico, 2);
                 _context.tbServicos.Add(servico);
                 _context.SaveChanges();
                 ViewBag.Mensagem = "Servico cadastrado com sucesso!";

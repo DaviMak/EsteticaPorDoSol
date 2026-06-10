@@ -24,19 +24,25 @@ namespace EsteticaPorDoSol.Controllers
         [HttpPost]
         public IActionResult BuscarVeiculo(string busca)
         {
-            var veiculo = _context.tbVeiculos
+            var veiculos = _context.tbVeiculos
                 .Include(v => v.Cliente)
-                .FirstOrDefault(v =>
+                .Where(v =>
                     v.dsPlaca.ToUpper() == busca.ToUpper() ||
-                    v.Cliente.dsNome.ToUpper().Contains(busca.ToUpper()));
+                    v.Cliente.dsNome.ToUpper().Contains(busca.ToUpper()))
+                .ToList();
 
-            if (veiculo == null)
+            if (!veiculos.Any())
             {
                 TempData["Mensagem"] = "Veículo não encontrado.";
                 return RedirectToAction("Entrada", "Home");
             }
 
-            return RedirectToAction("NovoAtendimento", new { idVeiculo = veiculo.idVeiculo });
+            // se encontrou só um, vai direto
+            if (veiculos.Count == 1)
+                return RedirectToAction("NovoAtendimento", new { idVeiculo = veiculos.First().idVeiculo });
+
+            // se encontrou mais de um, mostra lista pra escolher
+            return View("SelecionarVeiculo", veiculos);
         }
 
         // Abre tela de novo atendimento com o veículo já selecionado
@@ -147,27 +153,23 @@ namespace EsteticaPorDoSol.Controllers
             if (string.IsNullOrEmpty(placa))
                 return View(null);
 
-            var veiculo = _context.tbVeiculos
+            var veiculos = _context.tbVeiculos
                 .Include(v => v.Cliente)
-                .FirstOrDefault(v =>
+                .Include(v => v.Atendimentos)
+                    .ThenInclude(a => a.AtendimentoServicos)
+                        .ThenInclude(s => s.Servico)
+                .Where(v =>
                     v.dsPlaca.ToUpper() == placa.ToUpper() ||
-                    v.Cliente.dsNome.ToUpper().Contains(placa.ToUpper()));
+                    v.Cliente.dsNome.ToUpper().Contains(placa.ToUpper()))
+                .ToList();
 
-            if (veiculo == null)
+            if (!veiculos.Any())
             {
-                TempData["Erro"] = "Veículo não encontrado.";
+                TempData["Erro"] = "Nenhum veículo encontrado.";
                 return View(null);
             }
 
-            var historico = _context.tbAtendimentos
-                .Include(a => a.AtendimentoServicos)
-                    .ThenInclude(s => s.Servico)
-                .Where(a => a.idVeiculo == veiculo.idVeiculo)
-                .OrderByDescending(a => a.dtDataHoraAtendimento)
-                .ToList();
-
-            ViewBag.Veiculo = veiculo;
-            return View(historico);
+            return View("BuscarPorPlaca", veiculos);
         }
 
         [HttpGet]
