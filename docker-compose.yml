@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_CONNECTION_STRING=server=db;port=3306;database=DbEsteticaPorDoSol;user=root;password=senha123;
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: DbEsteticaPorDoSol
+    ports:
+      - "3306:3306"
