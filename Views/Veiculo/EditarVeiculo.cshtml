@@ -1,32 +1,74 @@
-﻿@model List<EsteticaPorDoSol.Models.Veiculo>
+﻿@model EsteticaPorDoSol.Models.Veiculo
+
 @{
-    ViewData["Title"] = "Lista de Veículos";
+    ViewData["Title"] = "Editar Veículo";
 }
 
+<h2>Editar Veículo</h2>
 
-<h2>Lista de Veículos</h2>
+@if (ViewBag.Mensagem != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Mensagem
+    </div>
+}
 
-<table class="table table-bordered">
-    <tr>
-        <th>ID</th>
-        <th>Placa</th>
-        <th>Modelo</th>
-        <th>Cor</th>
-        <th>Dono(a)</th>
-    </tr>
-    @foreach (var Veiculo in Model)
-    {
-        <tr>
-            <td>@Veiculo.idVeiculo</td>
-            <td>@Veiculo.dsPlaca</td>
-            <td>@Veiculo.dsModelo</td>
-            <td>@Veiculo.dsCor</td>
-            <td>@Veiculo.Cliente?.dsNome</td>
+<form asp-action="EditarVeiculo" asp-controller="Veiculo" method="post">
 
-            <td>
-                <a asp-controller="Veiculo" asp-action="Editar" asp-route-id="@Veiculo.idVeiculo" class="btn btn-warning">Editar</a>
-                <a asp-controller="Veiculo" asp-action="Excluir" asp-route-id="@Veiculo.idVeiculo" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este veículo?')">Excluir</a>
-            </td>
-        </tr>
+    <input type="hidden" asp-for="idVeiculo" />
+
+    <div class="mb-3">
+        <label asp-for="dsPlaca" class="form-label">Placa</label>
+        <input asp-for="dsPlaca" class="form-control" />
+        <span asp-validation-for="dsPlaca" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="dsModelo" class="form-label">Modelo</label>
+        <input asp-for="dsModelo" class="form-control" />
+        <span asp-validation-for="dsModelo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="dsCor" class="form-label">Cor</label>
+        <input asp-for="dsCor" class="form-control" />
+        <span asp-validation-for="dsCor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cliente</label>
+
+        <select asp-for="idCliente" class="form-select">
+            <option value="">Selecione um cliente</option>
+
+            @foreach (var cliente in ViewBag.Clientes)
+            {
+                @if (cliente.idCliente == Model.idCliente)
+                {
+                    <option value="@cliente.idCliente" selected>@cliente.dsNome</option>
+                }
+                else
+                {
+                    <option value="@cliente.idCliente">@cliente.dsNome</option>
+                }
+            }
+        </select>
+
+        <span asp-validation-for="idCliente" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Salvar Alterações
+    </button>
+
+    <a asp-action="ListarVeiculo" class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</table>
+}

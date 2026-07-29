@@ -46,10 +46,12 @@ namespace EsteticaPorDoSol.Controllers
                 TempData["Mensagem"] = "Veículo não encontrado.";
                 return RedirectToAction("ListarVeiculo");
             }
+            ViewBag.Clientes = _context.tbClientes.ToList();
 
             return View("EditarVeiculo", veiculo);
         }
-        [HttpPost]
+
+
         [HttpPost]
         public IActionResult EditarVeiculo(Veiculo veiculo)
         {
