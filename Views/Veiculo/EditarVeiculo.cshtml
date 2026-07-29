@@ -1,1 +1,32 @@
-﻿﻿﻿﻿
+﻿@model List<EsteticaPorDoSol.Models.Veiculo>
+@{
+    ViewData["Title"] = "Lista de Veículos";
+}
+
+
+<h2>Lista de Veículos</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Placa</th>
+        <th>Modelo</th>
+        <th>Cor</th>
+        <th>Dono(a)</th>
+    </tr>
+    @foreach (var Veiculo in Model)
+    {
+        <tr>
+            <td>@Veiculo.idVeiculo</td>
+            <td>@Veiculo.dsPlaca</td>
+            <td>@Veiculo.dsModelo</td>
+            <td>@Veiculo.dsCor</td>
+            <td>@Veiculo.Cliente?.dsNome</td>
+
+            <td>
+                <a asp-controller="Veiculo" asp-action="Editar" asp-route-id="@Veiculo.idVeiculo" class="btn btn-warning">Editar</a>
+                <a asp-controller="Veiculo" asp-action="Excluir" asp-route-id="@Veiculo.idVeiculo" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este veículo?')">Excluir</a>
+            </td>
+        </tr>
+    }
+</table>
