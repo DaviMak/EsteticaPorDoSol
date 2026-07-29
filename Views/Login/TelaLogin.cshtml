@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="col-md-4 mx-auto">
+        <h2 class="text-center mb-4">Estética Pôr do Sol</h2>
+
+        @if (TempData["Erro"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Erro"]</div>
+        }
+
+        <form asp-controller="Login" asp-action="Entrar" method="post">
+            <div class="mb-3">
+                <label class="form-label">Usuário</label>
+                <input type="text" name="usuario" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Senha</label>
+                <input type="password" name="senha" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+    </div>
+</div>
