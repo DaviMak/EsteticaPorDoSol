@@ -72,7 +72,7 @@ namespace EsteticaPorDoSol.Controllers
                 _context.tbVeiculos.Update(veiculo);
                 _context.SaveChanges();
                 TempData["Mensagem"] = "Veículo atualizado com sucesso!";
-                return RedirectToAction("ListarVeiculo");
+                return RedirectToAction("NovoAtendimento", "Atendimento", new { idVeiculo = veiculo.idVeiculo });
             }
 
             ViewBag.Clientes = _context.tbClientes.ToList();
@@ -105,7 +105,7 @@ namespace EsteticaPorDoSol.Controllers
                 _context.tbVeiculos.Add(veiculo);
                 _context.SaveChanges();
                 ViewBag.Mensagem = "Veículo cadastrado com sucesso!";
-                return RedirectToAction("listarVeiculo");
+                return RedirectToAction("NovoAtendimento", "Atendimento", new { idVeiculo = veiculo.idVeiculo });
             }
             TempData["Mensagem"] = "Erro ao cadastrar veículo. Verifique os dados e tente novamente.";
             ViewBag.Clientes = _context.tbClientes.ToList();
