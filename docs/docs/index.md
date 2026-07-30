@@ -22,23 +22,15 @@ icon: lucide/house
   </thead>
   <tbody>
     <tr>
-      <td>Leonardo de Barros Araujo</td>
+      <td>Pedro Luca de Oliveira Soares</td>
       <td>Product Owner</td>
     </tr>
     <tr>
-      <td>Pedro Luca de Oliveira Soares</td>
+      <td>Fabiano da Silva Santos</td>
       <td>Scrum Master</td>
     </tr>
     <tr>
       <td>Davi Assunção Mak</td>
-      <td>Desenvolvedor</td>
-    </tr>
-    <tr>
-      <td>Fabiano da Silva Santos</td>
-      <td>Desenvolvedor</td>
-    </tr>
-    <tr>
-      <td>Leonardo Maciel Wojciechowski</td>
       <td>Desenvolvedor</td>
     </tr>
   </tbody>
