@@ -6,7 +6,7 @@ var connStr = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
     ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connStr, ServerVersion.AutoDetect(connStr)));
+        options.UseMySql(connStr, new MySqlServerVersion(new Version(8, 0, 0))));
 
 builder.Services.AddControllersWithViews();
 
