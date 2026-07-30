@@ -13,7 +13,6 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Necessário para funcionar corretamente atrás do proxy do Cloud Run
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -29,13 +28,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-
-// Aplica migrations automaticamente no startup
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate();
-}
 
 app.MapControllerRoute(
     name: "default",
