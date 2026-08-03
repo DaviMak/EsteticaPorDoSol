@@ -20,7 +20,7 @@
             <td>@Servico.idServico</td>
             <td>@Servico.dsNomeServico</td>
             <td>@Servico.dsDescricaoServico</td>
-            <td>@Servico.vlServico</td>
+            <td>@Servico.vlServico.ToString("C")</td>
 
             <td>
                 <a asp-controller="Servico" asp-action="EditarServico" asp-route-id="@Servico.idServico" class="btn btn-warning">Editar</a>

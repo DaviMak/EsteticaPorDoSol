@@ -1,25 +1,49 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EsteticaPorDoSol</title>
+    <title>@ViewData["Title"] - Estética Pôr do Sol</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EsteticaPorDoSol.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container-fluid">
+            <button class="btn btn-outline-light" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+                    <i class="bi bi-list fs-4"></i>
+            </button>
+
+            <a asp-controller="Home" asp-action="TelaInicial" class="navbar-brand mx-auto">
+                <img src="~/img/LogoPDS.jpeg" height="45" />
+            </a>
+
+            <form asp-controller="Atendimento" asp-action="BuscarPorPlaca" method="get" class="d-flex">
+                <input class="form-control me-2" name="placa" placeholder="Placa" />
+                <button class="btn btn-light">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+    </nav>
+
+    <partial name="_OffcanvasMenu" />
+
+    <div class="container mt-4">
+        @RenderBody()
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

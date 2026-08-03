@@ -15,7 +15,7 @@ namespace EsteticaPorDoSol.Controllers
         {
             if (usuario == "kelvin" && senha == "12345")
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("TelaInicial", "Home");
             }
 
             TempData["Erro"] = "Usuário ou senha incorretos.";
