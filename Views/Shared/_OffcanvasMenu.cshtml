@@ -1,0 +1,128 @@
+<div class="offcanvas offcanvas-start"
+     tabindex="-1"
+     id="menuLateral">
+
+    <div class="offcanvas-header bg-dark text-white">
+
+        <h5>
+
+            <i class="bi bi-car-front-fill"></i>
+
+            Estética Pôr do Sol
+
+        </h5>
+
+        <button class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas">
+
+        </button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+        <div class="list-group">
+
+            <a asp-controller="Home"
+               asp-action="TelaInicial"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-house-door"></i>
+
+                Início
+
+            </a>
+
+            <a asp-controller="Cliente"
+               asp-action="CadastrarCliente"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-person"></i>
+
+                Cadastrar Clientes
+
+            </a>
+            <a asp-controller="Cliente"
+               asp-action="ListarClientes"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-person"></i>
+
+                Listar Clientes
+
+            </a>
+
+            <a asp-controller="Veiculo"
+               asp-action="CadastrarVeiculo"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-car-front"></i>
+
+                Cadastrar Veículos
+
+            </a>
+            <a asp-controller="Veiculo"
+               asp-action="ListarVeiculo"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-car-front"></i>
+
+                Listar Veículos
+
+            </a>
+
+            <a asp-controller="Servico"
+               asp-action="CadastrarServico"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-tools"></i>
+
+                Cadastrar Serviços
+
+            </a>
+            <a asp-controller="Servico"
+               asp-action="ListarServico"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-tools"></i>
+
+                Listar Serviços
+
+            </a>
+
+            <a asp-controller="Atendimento"
+               asp-action="BuscarPorPlaca"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-clipboard-check"></i>
+
+                Buscar Veículo
+
+            </a>
+            <a asp-controller="atendimento"
+               asp-action="Historico"
+               class="list-group-item list-group-item-action">
+
+                <i class="bi bi-tools"></i>
+
+                Histórico
+
+            </a>
+
+            <hr>
+
+            <a asp-controller="Login"
+               asp-action="Sair"
+               class="list-group-item list-group-item-action text-danger">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Sair
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
