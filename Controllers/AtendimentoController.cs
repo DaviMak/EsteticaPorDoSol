@@ -185,5 +185,31 @@ namespace EsteticaPorDoSol.Controllers
 
             return View(atendimentos);
         }
+
+        [HttpGet]
+        public IActionResult SelecionarCliente()
+        {
+            var clientes = _context.tbClientes
+                .OrderBy(c => c.dsNome)
+                .ToList();
+            return View(clientes);
+        }
+
+        [HttpGet]
+        public IActionResult SelecionarVeiculoCliente(int idCliente)
+        {
+            var cliente = _context.tbClientes
+                .Include(c => c.Veiculos)
+                .FirstOrDefault(c => c.idCliente == idCliente);
+
+            if (cliente == null)
+            {
+                TempData["Mensagem"] = "Cliente não encontrado.";
+                return RedirectToAction("SelecionarCliente");
+            }
+
+            ViewBag.Cliente = cliente;
+            return View(cliente.Veiculos);
+        }
     }
 }
