@@ -1,0 +1,33 @@
+@model List<EsteticaPorDoSol.Models.Cliente>
+@{
+    ViewData["Title"] = "Selecionar Cliente";
+}
+
+<h2>Selecionar Cliente</h2>
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-warning">@TempData["Mensagem"]</div>
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th></th>
+    </tr>
+    @foreach (var cliente in Model)
+    {
+        <tr>
+            <td>@cliente.dsNome</td>
+            <td>@(cliente.nrTelefone ?? "—")</td>
+            <td>
+                <a asp-controller="Atendimento" asp-action="SelecionarVeiculoCliente"
+                   asp-route-idCliente="@cliente.idCliente"
+                   class="btn btn-primary btn-sm">Selecionar</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<a asp-controller="Home" asp-action="Entrada" class="btn btn-secondary">Voltar</a>
