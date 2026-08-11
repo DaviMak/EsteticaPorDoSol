@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build, Test e Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restaurar dependências
+        run: dotnet restore
+
+      - name: Compilar aplicação
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Autenticar no Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configurar Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configurar Docker para Artifact Registry
+        run: gcloud auth configure-docker southamerica-east1-docker.pkg.dev
+
+      - name: Build da imagem Docker
+        run: |
+          gcloud builds submit --tag southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol
+
+      - name: Deploy no Cloud Run
+        run: |
+          gcloud run deploy esteticapordosol \
+            --image southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol \
+            --region southamerica-east1 \
+            --add-cloudsql-instances esteticapordosol:southamerica-east1:esteticapordosol-db \
+            --set-env-vars "DB_CONNECTION_STRING=server=/cloudsql/esteticapordosol:southamerica-east1:esteticapordosol-db;database=DbEsteticaPorDoSol;user=root;password=123;" \
+            --allow-unauthenticated
+
+      - name: Verificar deploy
+        run: |
+          echo "Deploy concluído com sucesso!"
+          echo "URL: https://esteticapordosol-865179936605.southamerica-east1.run.app"
