@@ -38,12 +38,13 @@ jobs:
 
       - name: Build da imagem Docker
         run: |
-          gcloud builds submit --tag southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol
+          docker build -t southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol:${{ github.sha }} .
+          docker push southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol:${{ github.sha }}
 
       - name: Deploy no Cloud Run
         run: |
           gcloud run deploy esteticapordosol \
-            --image southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol \
+            --image southamerica-east1-docker.pkg.dev/esteticapordosol/app-repo/esteticapordosol:${{ github.sha }} \
             --region southamerica-east1 \
             --add-cloudsql-instances esteticapordosol:southamerica-east1:esteticapordosol-db \
             --set-env-vars "DB_CONNECTION_STRING=server=/cloudsql/esteticapordosol:southamerica-east1:esteticapordosol-db;database=DbEsteticaPorDoSol;user=root;password=123;" \
