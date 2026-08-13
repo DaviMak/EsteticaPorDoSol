@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <!-- As Views e os arquivos estaticos moram na pasta front-end/, irma desta. -->
+    <FrontEndDir>$(MSBuildProjectDirectory)\..\front-end</FrontEndDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+  </ItemGroup>
+
+  <!-- O Razor SDK so enxerga .cshtml declarados como Content, e usa o caminho relativo
+       do item (por isso o LinkBase) para montar o "Views/..." que o MVC procura. -->
+  <ItemGroup>
+    <Content Include="$(FrontEndDir)\Views\**\*.cshtml" LinkBase="Views" />
+  </ItemGroup>
+
+  <!-- Os estaticos entram como None, e nao como Content, de proposito: Content faria o
+       SDK trata-los como "static web assets", cujo pipeline assume que o wwwroot fica
+       dentro da pasta do projeto e quebra o startup procurando back-end\wwwroot.
+       Como None, sao apenas copiados para publish\wwwroot, que e onde o app os procura. -->
+  <ItemGroup>
+    <None Include="$(FrontEndDir)\wwwroot\**" LinkBase="wwwroot" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

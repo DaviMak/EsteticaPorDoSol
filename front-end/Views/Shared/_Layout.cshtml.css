@@ -1,5 +1,12 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* ATENCAO: este arquivo nao esta mais ativo.
+
+   O CSS isolado (scoped CSS) do ASP.NET so funciona com o .cshtml.css dentro da pasta
+   do projeto .NET, e as Views passaram a morar aqui no front-end/. As regras abaixo
+   valiam apenas para os elementos escritos no proprio _Layout.cshtml (html, body, div
+   .container e main) - nenhuma delas casava com esses elementos, entao desligar o
+   pipeline nao mudou a aparencia do site.
+
+   Para estilos novos, use wwwroot/css/site.css, que vale para todas as telas. */
 
 a.navbar-brand {
   white-space: normal;

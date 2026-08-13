@@ -7,3 +7,6 @@ obj/
 .vs/
 wwwroot/lib/
 node_modules/
+
+# Senhas do docker-compose ficam fora do repositorio (veja .env.example).
+.env

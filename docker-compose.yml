@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: estetica-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-DbEsteticaPorDoSol}
+    ports:
+      # Exposto so no localhost para inspecionar o banco pelo Workbench/DBeaver.
+      - "127.0.0.1:${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - dados-mysql:/var/lib/mysql
+    healthcheck:
+      # A aplicacao roda as migrations logo no startup: se subir antes do MySQL
+      # aceitar conexoes, o container morre. Por isso o app espera este healthcheck.
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD:-root}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  app:
+    build:
+      # O contexto e a raiz porque o Dockerfile precisa de back-end/ e front-end/.
+      context: .
+      dockerfile: back-end/Dockerfile
+    container_name: estetica-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # O duplo sublinhado e como o ASP.NET le secoes aninhadas de configuracao.
+      ConnectionStrings__DefaultConnection: "server=db;port=3306;database=${MYSQL_DATABASE:-DbEsteticaPorDoSol};user=root;password=${MYSQL_ROOT_PASSWORD:-root};"
+      # Aqui nao ha TLS na frente do container: redirecionar para HTTPS derrubaria o site.
+      UseHttpsRedirection: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dados-mysql:

@@ -10,6 +10,6 @@ namespace EsteticaPorDoSol.Models
         public required string dsNomeServico { get; set; }
         public required string dsDescricaoServico { get; set; }
         public decimal vlServico { get; set; }
-        
+
     }
 }

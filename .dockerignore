@@ -1,0 +1,17 @@
+.git
+.gitignore
+.github
+.vs
+**/bin
+**/obj
+**/Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.override.yml
+.env
+deploy.zip
+*.md
+arquitetura.*
+infra
+deploy.bat
+deploy.ps1

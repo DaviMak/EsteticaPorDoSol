@@ -34,15 +34,15 @@ namespace EsteticaPorDoSol.Controllers
                 TempData["Mensagem"] = "Não é possível excluir o cliente, pois ele possui veículos cadastrados.";
                 return RedirectToAction("ListarCliente");
             }
-                _context.tbClientes.Remove(cliente);
-                _context.SaveChanges();
-                TempData["Sucesso"] = "Cliente excluído com sucesso!";
-                return RedirectToAction("ListarCliente");
+            _context.tbClientes.Remove(cliente);
+            _context.SaveChanges();
+            TempData["Sucesso"] = "Cliente excluído com sucesso!";
+            return RedirectToAction("ListarCliente");
         }
-        
+
 
         public IActionResult Editar(int id)
-        { 
+        {
             var cliente = _context.tbClientes.Find(id);
             if (cliente == null)
             {
@@ -76,7 +76,7 @@ namespace EsteticaPorDoSol.Controllers
                 _context.tbClientes.Add(cliente);
                 _context.SaveChanges();
                 TempData["Mensagem"] = "Cliente cadastrado com sucesso!";
-                
+
                 return RedirectToAction("CadastrarVeiculo", "Veiculo", new { idCliente = cliente.idCliente });
             }
             TempData["Mensagem"] = "Erro ao cadastrar cliente. Verifique os dados e tente novamente.";

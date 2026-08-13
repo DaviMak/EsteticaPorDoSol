@@ -14,7 +14,7 @@ namespace EsteticaPorDoSol.Controllers
         }
 
         public IActionResult ListarVeiculo()
-{
+        {
             var listaVeiculos = _context.tbVeiculos
                 .Include(v => v.Cliente)
                 .OrderByDescending(v => v.idVeiculo)
@@ -79,7 +79,7 @@ namespace EsteticaPorDoSol.Controllers
             return View("EditarVeiculo", veiculo);
         }
         [HttpGet]
-        public IActionResult CadastrarVeiculo (int? idCliente)
+        public IActionResult CadastrarVeiculo(int? idCliente)
         {
             ViewBag.Clientes = _context.tbClientes.ToList();
             ViewBag.idClienteSelecionado = idCliente;
@@ -92,7 +92,7 @@ namespace EsteticaPorDoSol.Controllers
             //veiculo.Cliente = _context.tbClientes.Find(veiculo.idCliente);
             if (ModelState.IsValid)
             {
-                if(veiculo.dsPlaca != null)
+                if (veiculo.dsPlaca != null)
                 {
                     veiculo.dsPlaca = veiculo.dsPlaca.Trim().ToUpper();
                     if (_context.tbVeiculos.Any(v => v.dsPlaca == veiculo.dsPlaca))

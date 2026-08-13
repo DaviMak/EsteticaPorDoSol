@@ -1,0 +1,15 @@
+# O 'gcloud builds submit --tag' so funciona com um Dockerfile na raiz do contexto.
+# Como o nosso vive em back-end/ (e precisa da raiz como contexto, para enxergar
+# front-end/), o build passa por esta configuracao explicita.
+#
+# Uso: gcloud builds submit --config=cloudbuild.yaml --substitutions=_IMAGEM=<tag>
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ["build", "--file", "back-end/Dockerfile", "--tag", "${_IMAGEM}", "."]
+
+images:
+  - "${_IMAGEM}"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
