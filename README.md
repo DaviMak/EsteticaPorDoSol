@@ -10,10 +10,10 @@ ASP.NET Core MVC (.NET 10) + Entity Framework Core + MySQL.
 ```
 .
 ├── docker-compose.yml     ambiente completo (aplicação + MySQL)
-├── cloudbuild.yaml        build da imagem no Google Cloud Build
 ├── back-end/              código C#: controllers, models, EF Core, Dockerfile
 ├── front-end/             telas Razor e arquivos estáticos
-└── infra/                 scripts de provisionamento das VMs no GCP
+├── tests/                 testes de unidade (xUnit)
+└── docs/                  site de documentação (MkDocs)
 ```
 
 As duas pastas formam **uma única aplicação**: o ASP.NET renderiza as Views do front-end
@@ -48,10 +48,20 @@ cd back-end
 dotnet run
 ```
 
-Exige um MySQL acessível pela connection string do `appsettings.json`.
+Exige um MySQL acessível pela connection string do `appsettings.json`. Em vez dela, a
+variável de ambiente `DB_CONNECTION_STRING` tem prioridade quando está definida — é por
+ela que o ambiente publicado recebe a connection string.
 
-## Deploy
+## Testes
 
-A aplicação roda no Cloud Run. O processo, os comandos e as decisões de arquitetura
-estão em [DEPLOY.md](DEPLOY.md); o push na `main` dispara o deploy automático pelo
-workflow `.github/workflows/deploy.yml`.
+```powershell
+dotnet test
+```
+
+## Branches
+
+Esta é a `back-end`: além do código C#, ela carrega o `front-end/` porque o build
+precisa das Views — o `.csproj` as compila dentro da própria DLL. A branch `front-end`
+tem apenas as telas, como base do trabalho de separá-las em uma aplicação própria.
+
+Os scripts e a documentação de deploy e de infraestrutura ficam na `main`.
