@@ -86,34 +86,9 @@ jobs:
             exit 1
           fi
 
-  codeql:
-    name: CodeQL
-    runs-on: ubuntu-latest
-
-    # A analise roda, mas o repositorio e privado e publicar os resultados exige
-    # o GitHub Code Security, que e pago - o upload termina recusado pelo servidor.
-    # O job segue no ar para nao perdermos o historico nem a volta por cima quando
-    # o recurso existir; ate la a falha dele nao derruba o CI. Se o repositorio
-    # virar publico, code scanning passa a ser gratuito: basta habilita-lo em
-    # Settings > Code security e remover esta linha.
-    continue-on-error: true
-
-    permissions:
-      contents: read
-      security-events: write
-      # A action consulta a API do proprio workflow run para anexar os resultados;
-      # sem isto ela falha no fim com "Resource not accessible by integration".
-      actions: read
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Inicializar o CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: csharp
-          build-mode: none
-
-      - name: Analisar
-        uses: github/codeql-action/analyze@v3
+# Havia aqui um job de CodeQL. A analise rodava, mas publicar os resultados exige
+# code scanning ativo, e num repositorio privado isso depende do GitHub Code
+# Security, que e pago: o upload terminava recusado pelo servidor. Se o
+# repositorio virar publico, code scanning passa a ser gratuito e vale a pena
+# retomar o job - basta habilita-lo em Settings > Code security e restaurar o
+# trecho pelo historico deste arquivo.
