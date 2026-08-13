@@ -67,7 +67,8 @@ jobs:
         run: dotnet format back-end/EsteticaPorDoSol.csproj --verify-no-changes --verbosity minimal
 
       # Informativo: os avisos de nulidade e de API obsoleta ficam registrados
-      # no resumo da execucao, mas nao travam o merge. Quem trava e o CodeQL.
+      # no resumo da execucao, mas nao travam o merge. Quem trava o merge sao a
+      # formatacao e as dependencias vulneraveis, aqui deste job.
       - name: Avisos do compilador
         run: |
           dotnet build --no-restore --configuration Release 2>&1 | tee build.log
@@ -88,6 +89,14 @@ jobs:
   codeql:
     name: CodeQL
     runs-on: ubuntu-latest
+
+    # A analise roda, mas o repositorio e privado e publicar os resultados exige
+    # o GitHub Code Security, que e pago - o upload termina recusado pelo servidor.
+    # O job segue no ar para nao perdermos o historico nem a volta por cima quando
+    # o recurso existir; ate la a falha dele nao derruba o CI. Se o repositorio
+    # virar publico, code scanning passa a ser gratuito: basta habilita-lo em
+    # Settings > Code security e remover esta linha.
+    continue-on-error: true
 
     permissions:
       contents: read
