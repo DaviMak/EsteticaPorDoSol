@@ -4,3 +4,5 @@
 bin
 Dockerfile
 .dockerignore
+tests/**/bin/
+tests/**/obj/
