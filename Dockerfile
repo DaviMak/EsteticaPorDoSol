@@ -6,7 +6,7 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . ./
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish EsteticaPorDoSol.csproj -c Release -o /app/publish
 
 # Etapa 2 — Imagem final
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
