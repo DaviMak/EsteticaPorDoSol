@@ -10,3 +10,6 @@ node_modules/
 
 # Senhas do docker-compose ficam fora do repositorio (veja .env.example).
 .env
+
+# Chave da service account do GCP.
+key.json

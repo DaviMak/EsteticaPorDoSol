@@ -1,0 +1,42 @@
+@model List<EsteticaPorDoSol.Models.Veiculo>
+@{
+    ViewData["Title"] = "Selecionar Veículo";
+    var cliente = ViewBag.Cliente as EsteticaPorDoSol.Models.Cliente;
+}
+
+<h2>Selecionar Veículo</h2>
+<p><strong>Cliente:</strong> @cliente?.dsNome</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Este cliente não possui veículos cadastrados.</div>
+    <a asp-controller="Veiculo" asp-action="CadastrarVeiculo"
+       asp-route-idCliente="@cliente?.idCliente"
+       class="btn btn-success">Cadastrar Veículo</a>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Cor</th>
+            <th></th>
+        </tr>
+        @foreach (var veiculo in Model)
+        {
+            <tr>
+                <td>@veiculo.dsPlaca</td>
+                <td>@veiculo.dsModelo</td>
+                <td>@veiculo.dsCor</td>
+                <td>
+                    <a asp-controller="Atendimento" asp-action="NovoAtendimento"
+                       asp-route-idVeiculo="@veiculo.idVeiculo"
+                       class="btn btn-primary btn-sm">Selecionar</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a asp-controller="Atendimento" asp-action="SelecionarCliente" class="btn btn-secondary">Voltar</a>

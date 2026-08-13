@@ -9,9 +9,11 @@
 docker-compose.yml
 docker-compose.override.yml
 .env
+key.json
 deploy.zip
 *.md
 arquitetura.*
 infra
+tests
 deploy.bat
 deploy.ps1

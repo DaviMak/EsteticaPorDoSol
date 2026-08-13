@@ -14,9 +14,14 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     WebRootPath = webRoot
 });
 
+// O deploy injeta a connection string por variavel de ambiente; o appsettings.json
+// atende o desenvolvimento local.
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        connectionString,
         ServerVersion.Parse("8.0-mysql")
     ));
 
