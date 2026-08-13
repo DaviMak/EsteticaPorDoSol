@@ -2,6 +2,15 @@
 
 Camada de apresentação da aplicação: as telas e os arquivos estáticos.
 
+> **Esta branch contém apenas o front-end.** Ela não compila nem roda sozinha: hoje as
+> Views são Razor e quem as renderiza é a aplicação ASP.NET, que vive na branch
+> `back-end`. Para ver as telas no navegador, trabalhe a partir da `back-end` — lá as
+> duas pastas estão juntas e o `docker compose up` sobe tudo.
+>
+> Deployar o front em uma máquina separada exige antes transformar o back-end em API e
+> estas telas em uma aplicação própria que a consuma. Enquanto isso não acontece, esta
+> branch serve como o ponto de partida desse trabalho.
+
 | Pasta | Conteúdo |
 |---|---|
 | `Views/` | Telas Razor (`.cshtml`), organizadas por controller |
