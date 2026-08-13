@@ -92,6 +92,9 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      # A action consulta a API do proprio workflow run para anexar os resultados;
+      # sem isto ela falha no fim com "Resource not accessible by integration".
+      actions: read
 
     steps:
       - name: Checkout
