@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: estetica-app
+spec:
+  replicas: 2 # Atende ao requisito de alta disponibilidade
+  selector:
+    matchLabels:
+      app: estetica-app
+  template:
+    metadata:
+      labels:
+        app: estetica-app
+    spec:
+      containers:
+      - name: app
+        image: esteticapordosol:v1 # Nome exato que você usou no docker build
+        imagePullPolicy: Never # Diz ao Minikube para usar a imagem local
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_CONNECTION_STRING
+          value: "server=db;port=3306;database=DbEsteticaPorDoSol;user=root;password=senha123;"

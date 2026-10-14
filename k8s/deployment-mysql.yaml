@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: estetica-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: estetica-db
+  template:
+    metadata:
+      labels:
+        app: estetica-db
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: MYSQL_DATABASE
