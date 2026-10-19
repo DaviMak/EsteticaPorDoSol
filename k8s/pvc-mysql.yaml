@@ -1,0 +1,12 @@
+# que garante que os dados do banco sobrevivem mesmo que o pod do MySQL seja deletado ou reiniciado
+
+apiVersion: v1  
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
