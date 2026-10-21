@@ -42,8 +42,10 @@ cd EsteticaPorDoSol
 Comandos executados pelo terminal do VS Code (utilizando o PowerShell):
 
 ```bash
-minikube start
+minikube start --driver=docker --container-runtime=docker
 ```
+
+> **Importante:** o `--container-runtime=docker` é necessário porque as versões mais recentes do Minikube usam o `containerd` por padrão, e nesse modo o `minikube docker-env` do próximo passo não funciona no Windows. Se você já tinha um cluster criado sem essa opção, rode `minikube delete` antes.
 
 ### 3. Configurar o Docker para usar o ambiente do Minikube
 
@@ -108,6 +110,7 @@ kubectl port-forward service/db 3307:3306
 
 **Terminal 2 — Migrations (Executar obrigatoriamente no PowerShell):**
 ```powershell
+dotnet restore
 $env:DB_CONNECTION_STRING="server=localhost;port=3307;database=DbEsteticaPorDoSol;user=root;password=senha123;"
 dotnet ef database update
 ```
