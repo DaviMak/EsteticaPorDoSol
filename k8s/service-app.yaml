@@ -1,3 +1,5 @@
+#Junta os 2 pods do aplicativo sob um único endereço e abre o acesso para o seu navegador e depois distribui a carga entre os pods do aplicativo
+
 apiVersion: v1
 kind: Service
 metadata:

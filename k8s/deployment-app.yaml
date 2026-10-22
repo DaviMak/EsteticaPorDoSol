@@ -1,3 +1,5 @@
+#garante o estado desejado da aplicação, ou seja, se o pod cair, o deployment cria outro automaticamente
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
